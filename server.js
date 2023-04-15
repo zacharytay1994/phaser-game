@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
   });
 });
 
-server.listen(8081, function () {
+server.listen(80, function () {
   // console.log(`listening on ${server.address().port}`);
   logger.logi(`listening on ${server.address().port}`);
 });

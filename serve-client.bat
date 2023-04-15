@@ -1,1 +1,1 @@
-start chrome "http://localhost:8081"
+start chrome "http://localhost"
