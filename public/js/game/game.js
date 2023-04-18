@@ -1,5 +1,6 @@
 function preload() {
-    this.load.image('player', 'assets/player.png');
+    this.load.image("player", "assets/player.png");
+    this.load.image("tree", "assets/tree1.png");
 }
 
 function create() {
@@ -53,6 +54,11 @@ function create() {
 
     // input handling
     this.keys = this.input.keyboard.createCursorKeys();
+
+    // game objects
+    clientObjects.receiveFromServer(this, this.socket);
+
+    // this.add.existing(new ClientObject(this, 50, 50, "tree1"));
 }
 
 function update() {

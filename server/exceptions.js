@@ -1,7 +1,7 @@
 exports.exceptions = (function () {
     const logger = require("./logger.js").logger;
     return {
-        handle: (func, handler = (error) => logger.loge(error)) => {
+        handle: (func, handler = (error) => logger.loge(error.stack)) => {
             try {
                 func();
             }

@@ -1,3 +1,5 @@
+const logEnabled = true;
+
 exports.logger = (function () {
 
     var line = 0;
@@ -8,13 +10,15 @@ exports.logger = (function () {
     }
 
     function log(content, type) {
-        // const seperatorLength = 20;
-        // const logSubSeperator = '_'.repeat(10);
-        // ++line;
-        // console.log(logSubSeperator);
-        // console.log("\n " + line + ". " + type + "\n");
-        // console.log("\t" + content);
-        // console.log(logSubSeperator.padStart(seperatorLength, ' '));
+        if (logEnabled) {
+            const seperatorLength = 20;
+            const logSubSeperator = '_'.repeat(10);
+            ++line;
+            console.log(logSubSeperator);
+            console.log("\n " + line + ". " + type + "\n");
+            console.log("\t" + content);
+            console.log(logSubSeperator.padStart(seperatorLength, ' '));
+        }
     }
 
     return {
