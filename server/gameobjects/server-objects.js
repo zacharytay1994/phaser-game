@@ -11,6 +11,16 @@ exports.serverObjects = (function () {
     var uid = 0;
 
     return {
+        receiveFromClient: (socket) => {
+            socket.on("deleteInstanceDestroyObject", (id) => {
+                logger.logi("attempting to delete and destroy object " + id + " by client " + socket.id);
+                if (instances.has(id)) {
+                    instances.delete(id);
+                }
+                socket.broadcast.emit("deleteInstanceDestroyObject", id);
+                socket.emit("deleteInstance", id);
+            });
+        },
         newObject: (io, x, y, object) => {
 
             // create new object

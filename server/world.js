@@ -23,9 +23,12 @@ exports.world = (function () {
 
             serverObjects.logInstances();
         },
-        sendToClient: (socket, io) => {
+        sendToClient: (socket) => {
             logger.logi("sending world to client " + socket.id);
             serverObjects.sendObjectsToClient(socket);
+        },
+        handleClientRequests: (socket) => {
+            serverObjects.receiveFromClient(socket);
         }
     }
 })();

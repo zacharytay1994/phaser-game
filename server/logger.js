@@ -1,6 +1,6 @@
-const logEnabled = true;
-
 exports.logger = (function () {
+
+    const logEnabled = true;
 
     var line = 0;
 

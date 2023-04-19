@@ -1,7 +1,12 @@
 class Tree extends ClientObject {
 
-    constructor(scene, id, x, y, texture) {
-        super(scene, id, x, y, texture);
+    constructor(socket, scene, id, x, y, texture) {
+        super(socket, scene, id, x, y, texture);
+
+        this.setInteractive();
+        this.on("pointerdown", (pointer) => {
+            this.clientDestroy();
+        })
     }
 
 }

@@ -56,7 +56,7 @@ function create() {
     this.keys = this.input.keyboard.createCursorKeys();
 
     // game objects
-    clientObjects.receiveFromServer(this, this.socket);
+    clientObjects.receiveFromServer(this);
 
     // this.add.existing(new ClientObject(this, 50, 50, "tree1"));
 }

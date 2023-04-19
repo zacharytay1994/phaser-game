@@ -29,7 +29,8 @@ io.on('connection', function (socket) {
 
     players.newPlayer(socket);
 
-    world.sendToClient(socket, io);
+    world.sendToClient(socket);
+    world.handleClientRequests(socket);
   });
 });
 

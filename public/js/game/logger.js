@@ -1,20 +1,25 @@
 var logger = (function () {
 
+    const logEnabled = true;
+
     var line = 0;
 
     const logType = {
         INFO: "[i] INFO",
-        ERROR: "[e] ERROR"
+        ERROR: "[e] ERROR",
+        SOCKET: "[s] SOCKET"
     }
 
     function log(content, type) {
-        const seperatorLength = 20;
-        const logSubSeperator = '_'.repeat(10);
-        ++line;
-        console.log(logSubSeperator);
-        console.log("\n " + line + ". " + type + "\n");
-        console.log("\t" + content);
-        console.log(logSubSeperator.padStart(seperatorLength, ' '));
+        if (logEnabled) {
+            const seperatorLength = 20;
+            const logSubSeperator = '_'.repeat(10);
+            ++line;
+            console.log(logSubSeperator);
+            console.log("\n " + line + ". " + type + "\n");
+            console.log("\t" + content);
+            console.log(logSubSeperator.padStart(seperatorLength, ' '));
+        }
     }
 
     return {
@@ -23,6 +28,9 @@ var logger = (function () {
         },
         loge: (content) => {
             log(content, logType.ERROR);
+        },
+        logs: (event, payload) => {
+            log("received: " + event + "\n\tpayload: " + payload, logType.SOCKET);
         }
     }
 })();
