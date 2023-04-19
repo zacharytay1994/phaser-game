@@ -1,12 +1,14 @@
 class ClientObject extends Phaser.GameObjects.Sprite {
 
-    constructor(socket, scene, id, x, y, texture) {
+    constructor(scene, socket, id, x, y, texture) {
         super(scene, x, y);
 
+        this.scene = scene;
         this.socket = socket;
         this.id = id;
         this.setTexture(texture);
         this.setPosition(x, y);
+        this.creator = 0;
     }
 
     preUpdate(time, delta) {

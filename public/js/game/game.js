@@ -1,6 +1,12 @@
 function preload() {
-    this.load.image("player", "assets/player.png");
-    this.load.image("tree", "assets/tree1.png");
+    // character assets
+    this.load.image("player", "assets/characters/player.png");
+
+    // environment assets
+    this.load.image("tree", "assets/environment/tree1.png");
+
+    // effect assets
+    this.load.image("interaction", "assets/effects/interaction.png");
 }
 
 function create() {
@@ -13,6 +19,7 @@ function create() {
         left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
         right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
     }
+    playerInputCallbacks(this);
 
     // get all other players event, called on joining
     this.socket.on("otherPlayers", (players) => {
@@ -52,17 +59,18 @@ function create() {
         });
     });
 
-    // input handling
-    this.keys = this.input.keyboard.createCursorKeys();
+    // keyboard handling
+    // this.keys = this.input.keyboard.createCursorKeys();
 
     // game objects
     clientObjects.receiveFromServer(this);
+    clientObjects.receiveFromClients(this);
 
     // this.add.existing(new ClientObject(this, 50, 50, "tree1"));
 }
 
 function update() {
-    handleInput(this);
+    playerInputUpdate(this);
     syncPlayerStateWithPlayerSprite(this.playerState, this.player);
     syncPlayerWithServer(this);
 }
@@ -87,7 +95,14 @@ function addOtherPlayer(scene, playerState) {
     logger.logi("other player added to scene");
 }
 
-function handleInput(scene) {
+function playerInputCallbacks(scene) {
+    scene.input.on("pointerdown", (pointer) => {
+        // clientObjects.newClientOnlyObject(scene, "Interaction", pointer.x, pointer.y);
+        new Marker(scene, scene.socket, scene.socket.id, pointer.x, pointer.y).sendToClients();
+    });
+}
+
+function playerInputUpdate(scene) {
     if (scene.player) {
         // PLAYER MOVEMENT ====================================================================
         if (scene.inputKeys.down.isDown) {

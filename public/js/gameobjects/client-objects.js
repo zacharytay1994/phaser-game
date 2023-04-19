@@ -2,6 +2,7 @@ var clientObjects = (function () {
 
     // define client objects
     var objects = new Map([
+        ["Marker", [Marker, "interaction"]],
         ["Tree", [Tree, "tree"]]
     ]);
     var instances = new Map();
@@ -23,10 +24,10 @@ var clientObjects = (function () {
                 var newObject;
                 if (objects.has(object.objectName)) {
                     var objectData = objects.get(object.objectName);
-                    newObject = new objectData[0](socket, scene, object.id, object.x, object.y, objectData[1]);
+                    newObject = new objectData[0](scene, socket, object.id, object.x, object.y, objectData[1]);
                 }
                 else {
-                    newObject = new ClientObject(socket, scene, object.id, object.x, object.y, object.objectName);
+                    newObject = new ClientObject(scene, socket, object.id, object.x, object.y, "none");
                 }
 
                 // add object to client object instances
@@ -46,6 +47,21 @@ var clientObjects = (function () {
                 logger.logs("deleteInstance", id);
                 if (instances.has(id)) {
                     deleteInstanceFromMap(id);
+                }
+            });
+        },
+        receiveFromClients: (scene) => {
+            var socket = scene.socket;
+            socket.on("createClientOnlyObject", (objectInfo) => {
+                logger.logs("createClientOnlyObject", objectInfo);
+
+                var newObject;
+                if (objects.has(objectInfo.name)) {
+                    var objectData = objects.get(objectInfo.name);
+                    newObject = new objectData[0](scene, socket, objectInfo.creatorId, objectInfo.x, objectInfo.y);
+                }
+                else {
+                    newObject = new ClientOnlyObject(scene, socket, objectInfo.creatorId, objectInfo.x, objectInfo.y, "none");
                 }
             });
         }

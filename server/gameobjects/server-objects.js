@@ -5,6 +5,7 @@ exports.serverObjects = (function () {
     // define server objects
     var objects = new Map([
         ["ServerObject", require("./server-object.js").ServerObject],
+        ["Interaction", require("./server-effects.js").Interaction],
         ["Tree", require("./server-environment.js").Tree]
     ])
     var instances = new Map();
@@ -19,6 +20,11 @@ exports.serverObjects = (function () {
                 }
                 socket.broadcast.emit("deleteInstanceDestroyObject", id);
                 socket.emit("deleteInstance", id);
+            });
+            
+            // route client only object create request back to all other clients
+            socket.on("createClientOnlyObject", (objectInfo) => {
+                socket.broadcast.emit("createClientOnlyObject", objectInfo);
             });
         },
         newObject: (io, x, y, object) => {

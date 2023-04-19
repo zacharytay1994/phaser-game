@@ -1,6 +1,6 @@
 exports.logger = (function () {
 
-    const logEnabled = false;
+    const logEnabled = true;
 
     var line = 0;
 
