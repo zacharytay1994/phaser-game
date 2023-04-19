@@ -2,8 +2,8 @@ var clientObjects = (function () {
 
     // define client objects
     var objects = new Map([
-        ["Marker", [Marker, "interaction"]],
-        ["Tree", [Tree, "tree"]]
+        ["Marker", Marker],
+        ["Tree", Tree]
     ]);
     var instances = new Map();
 
@@ -23,8 +23,8 @@ var clientObjects = (function () {
                 // create new object on client based on what server sent
                 var newObject;
                 if (objects.has(object.objectName)) {
-                    var objectData = objects.get(object.objectName);
-                    newObject = new objectData[0](scene, socket, object.id, object.x, object.y, objectData[1]);
+                    var objectType = objects.get(object.objectName);
+                    newObject = new objectType(scene, socket, object.id, object.x, object.y);
                 }
                 else {
                     newObject = new ClientObject(scene, socket, object.id, object.x, object.y, "none");
@@ -57,8 +57,8 @@ var clientObjects = (function () {
 
                 var newObject;
                 if (objects.has(objectInfo.name)) {
-                    var objectData = objects.get(objectInfo.name);
-                    newObject = new objectData[0](scene, socket, objectInfo.creatorId, objectInfo.x, objectInfo.y);
+                    var objectType = objects.get(objectInfo.name);
+                    newObject = new objectType(scene, socket, objectInfo.creatorId, objectInfo.x, objectInfo.y);
                 }
                 else {
                     newObject = new ClientOnlyObject(scene, socket, objectInfo.creatorId, objectInfo.x, objectInfo.y, "none");
