@@ -81,8 +81,11 @@ function create() {
     // this.keys = this.input.keyboard.createCursorKeys();
 
     // game objects
+    clientObjects.createGroups(this);
     clientObjects.receiveFromServer(this);
     clientObjects.receiveFromClients(this);
+    
+
 
     // this.add.existing(new ClientObject(this, 50, 50, "tree1"));
 }
@@ -92,6 +95,7 @@ function update() {
     syncPlayerStateWithPlayerSprite(this.playerState, this.player);
     syncPlayerWithServer(this);
     interpolateOtherPlayerPositions(this);
+    clientObjects.overlapMarkerInteractable(this);
 }
 
 function addPlayer(scene, playerState) {

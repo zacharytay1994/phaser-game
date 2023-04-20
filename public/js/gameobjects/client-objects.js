@@ -16,6 +16,24 @@ var clientObjects = (function () {
     }
 
     return {
+        createGroups: (scene) => {
+            // marker group for markers that interact with the world
+            scene.markerGroup = scene.add.group();
+            scene.markerGroup.enableBody = true;
+            scene.markerGroup.physicsBodyType = Phaser.Physics.ARCADE;
+
+            // interactable group, for objects that can be interacted with by markers
+            scene.interactableGroup = scene.add.group();
+            scene.interactableGroup.enableBody = true;
+            scene.interactableGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        },
+        overlapMarkerInteractable: (scene) => {
+            scene.physics.overlap(scene.markerGroup, scene.interactableGroup, (marker, interactable) => {
+                if (marker.startEvent) {
+                    Marker.types[marker.type].hitEvent(marker, interactable);
+                }
+            }, null, scene);
+        },
         receiveFromServer: (scene) => {
             var socket = scene.socket;
             socket.on("syncGameObject", (object) => {
@@ -32,7 +50,7 @@ var clientObjects = (function () {
 
                 // add object to client object instances
                 instances.set(object.id, newObject);
-                scene.add.existing(newObject);
+                // scene.add.existing(newObject);
             });
 
             socket.on("deleteInstanceDestroyObject", (id) => {
@@ -68,6 +86,8 @@ var clientObjects = (function () {
             socket.on("createMarker", (marker) => {
                 logger.logs("createMarker", marker);
                 new Marker(scene, socket, marker.owner, marker.x, marker.y, marker.type);
+                console.log(scene.markerGroup);
+                console.log(scene.interactableGroup);
             });
         }
     }
