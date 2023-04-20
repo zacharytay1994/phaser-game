@@ -5,7 +5,8 @@ exports.serverObjects = (function () {
     // define server objects
     var objects = new Map([
         ["ServerObject", require("./server-object.js").ServerObject],
-        ["Tree", require("./server-environment.js").Tree]
+        ["Tree", require("./server-environment.js").Tree],
+        ["MonsterTree", require("./server-monsters.js").MonsterTree]
     ])
     var instances = new Map();
     var uid = 0;
@@ -31,7 +32,6 @@ exports.serverObjects = (function () {
             })
         },
         newObject: (io, x, y, object) => {
-
             // create new object
             var newObject;
             if (objects.has(object)) {

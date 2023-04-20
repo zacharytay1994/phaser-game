@@ -15,8 +15,12 @@ exports.world = (function () {
             // use perlin noise generate trees
             for (var x = 0; x < worldSize; ++x) {
                 for (var y = 0; y < worldSize; ++y) {
-                    if (noise.simplex2(x, y) > density) {
+                    var value = noise.simplex2(x,y);
+                    if (value > density) {
                         serverObjects.newObject(io, cellSize * x, cellSize * y, "Tree");
+                    }
+                    else if (value < -0.85) {
+                        serverObjects.newObject(io, cellSize * x, cellSize * y, "MonsterTree");
                     }
                 }
             }

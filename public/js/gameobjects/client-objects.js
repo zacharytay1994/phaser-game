@@ -5,7 +5,8 @@ class ClientObjects {
 
         this.objects = new Map([
             ["Marker", Marker],
-            ["Tree", Tree]
+            ["Tree", Tree],
+            ["MonsterTree", MonsterTree]
         ]);
 
         this.instances = new Map();
