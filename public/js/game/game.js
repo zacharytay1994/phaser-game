@@ -24,20 +24,13 @@ function createAnimations(scene) {
 }
 
 function create() {
-
     createAnimations(this);
-
     this.socket = io();
-
     this.players = new ClientPlayers(this);
-
-    // game objects
-    clientObjects.createGroups(this);
-    clientObjects.receiveFromServer(this);
-    clientObjects.receiveFromClients(this);
+    this.clientObjects = new ClientObjects(this);
 }
 
 function update() {
     this.players.update();
-    clientObjects.overlapMarkerInteractable(this);
+    this.clientObjects.update();
 }
