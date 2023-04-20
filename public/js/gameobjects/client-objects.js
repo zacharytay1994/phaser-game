@@ -50,7 +50,6 @@ var clientObjects = (function () {
 
                 // add object to client object instances
                 instances.set(object.id, newObject);
-                // scene.add.existing(newObject);
             });
 
             socket.on("deleteInstanceDestroyObject", (id) => {

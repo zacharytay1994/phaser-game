@@ -9,7 +9,6 @@ class myAnimation extends Phaser.GameObjects.Sprite {
 
         // remove animation on complete
         this.on("animationcomplete", () => {
-            // this.destroy();
             this.done = true;
         })
     }

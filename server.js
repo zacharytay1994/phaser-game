@@ -1,7 +1,6 @@
 var logger = require('./server/logger.js').logger;
 var exceptions = require('./server/exceptions.js').exceptions;
 var players = require('./server/players.js').players;
-// var serverObjects = require("./server/gameobjects/server-object.js").serverObjects
 
 var express = require('express');
 var app = express();

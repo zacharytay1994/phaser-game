@@ -77,17 +77,10 @@ function create() {
         });
     });
 
-    // keyboard handling
-    // this.keys = this.input.keyboard.createCursorKeys();
-
     // game objects
     clientObjects.createGroups(this);
     clientObjects.receiveFromServer(this);
     clientObjects.receiveFromClients(this);
-    
-
-
-    // this.add.existing(new ClientObject(this, 50, 50, "tree1"));
 }
 
 function update() {
@@ -123,8 +116,6 @@ function addOtherPlayer(scene, playerState) {
 function playerInputCallbacks(scene) {
     scene.input.on("pointerdown", (pointer) => {
         new Marker(scene, scene.socket, scene.socket.id, pointer.x, pointer.y, Marker.names["AxeBasic"]).sendToClients();
-
-        // new myAnimation(scene, pointer.x, pointer.y, "anim_axeswing", [0, 1, 2], 3, 0);
     });
 }
 

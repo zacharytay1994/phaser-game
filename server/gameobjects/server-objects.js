@@ -5,7 +5,6 @@ exports.serverObjects = (function () {
     // define server objects
     var objects = new Map([
         ["ServerObject", require("./server-object.js").ServerObject],
-        ["Interaction", require("./server-effects.js").Interaction],
         ["Tree", require("./server-environment.js").Tree]
     ])
     var instances = new Map();
