@@ -58,11 +58,16 @@ var clientObjects = (function () {
                 var newObject;
                 if (objects.has(objectInfo.name)) {
                     var objectType = objects.get(objectInfo.name);
-                    newObject = new objectType(scene, socket, objectInfo.creatorId, objectInfo.x, objectInfo.y);
+                    newObject = new objectType(scene, socket, objectInfo.creatorId, objectInfo.x, objectInfo.y, objectInfo.data);
                 }
                 else {
                     newObject = new ClientOnlyObject(scene, socket, objectInfo.creatorId, objectInfo.x, objectInfo.y, "none");
                 }
+            });
+
+            socket.on("createMarker", (marker) => {
+                logger.logs("createMarker", marker);
+                new Marker(scene, socket, marker.owner, marker.x, marker.y, marker.type);
             });
         }
     }

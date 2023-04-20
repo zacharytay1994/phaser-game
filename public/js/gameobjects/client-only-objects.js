@@ -8,6 +8,7 @@ class ClientOnlyObject extends Phaser.GameObjects.Sprite {
         this.creatorId = creatorId;
         this.setTexture(texture);
         this.setPosition(x, y);
+        this.data = {};
 
         scene.add.existing(this);
     }
@@ -21,7 +22,8 @@ class ClientOnlyObject extends Phaser.GameObjects.Sprite {
             name: this.name,
             creatorId: this.creatorId,
             x: this.x,
-            y: this.y
+            y: this.y,
+            data: this.data
         });
     }
 

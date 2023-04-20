@@ -7,9 +7,26 @@ function preload() {
 
     // effect assets
     this.load.image("interaction", "assets/effects/interaction.png");
+
+    // animations 
+    this.load.spritesheet('anim_axeswing', 'assets/effects/equipment/anim_axeswing.png', { frameWidth: 32, frameHeight: 32 });
+}
+
+function createAnimations(scene) {
+
+    scene.anims.create({
+        key: "anim_axeswing",
+        frames: scene.anims.generateFrameNumbers("anim_axeswing", { frames: [0, 1, 2] }),
+        frameRate: 3,
+        repeat: 0
+    });
+
 }
 
 function create() {
+
+    createAnimations(this);
+
     this.socket = io();
     this.otherPlayers = this.add.group();
 
@@ -101,7 +118,9 @@ function addOtherPlayer(scene, playerState) {
 
 function playerInputCallbacks(scene) {
     scene.input.on("pointerdown", (pointer) => {
-        new Marker(scene, scene.socket, scene.socket.id, pointer.x, pointer.y).sendToClients();
+        new Marker(scene, scene.socket, scene.socket.id, pointer.x, pointer.y, Marker.names["AxeBasic"]).sendToClients();
+
+        // new myAnimation(scene, pointer.x, pointer.y, "anim_axeswing", [0, 1, 2], 3, 0);
     });
 }
 

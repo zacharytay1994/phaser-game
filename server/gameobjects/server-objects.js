@@ -26,6 +26,10 @@ exports.serverObjects = (function () {
             socket.on("createClientOnlyObject", (objectInfo) => {
                 socket.broadcast.emit("createClientOnlyObject", objectInfo);
             });
+
+            socket.on("createMarker", (marker) => {
+                socket.broadcast.emit("createMarker", marker);
+            })
         },
         newObject: (io, x, y, object) => {
 
