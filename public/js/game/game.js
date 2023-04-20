@@ -54,7 +54,8 @@ function create() {
     this.socket.on("playerStateChanged", (playerState) => {
         this.otherPlayers.getChildren().forEach((player) => {
             if (player.id === playerState.id) {
-                player.setPosition(playerState.x, playerState.y);
+                player.nextX = playerState.x;
+                player.nextY = playerState.y;
             }
         });
     });
@@ -73,6 +74,7 @@ function update() {
     playerInputUpdate(this);
     syncPlayerStateWithPlayerSprite(this.playerState, this.player);
     syncPlayerWithServer(this);
+    interpolateOtherPlayerPositions(this);
 }
 
 function addPlayer(scene, playerState) {
@@ -90,6 +92,8 @@ function addOtherPlayer(scene, playerState) {
     otherPlayer.setDrag(100);
     otherPlayer.setMaxVelocity(200);
     otherPlayer.id = playerState.id;
+    otherPlayer.nextX = playerState.x;
+    otherPlayer.nextY = playerState.y;
 
     scene.otherPlayers.add(otherPlayer);
     logger.logi("other player added to scene");
@@ -97,7 +101,6 @@ function addOtherPlayer(scene, playerState) {
 
 function playerInputCallbacks(scene) {
     scene.input.on("pointerdown", (pointer) => {
-        // clientObjects.newClientOnlyObject(scene, "Interaction", pointer.x, pointer.y);
         new Marker(scene, scene.socket, scene.socket.id, pointer.x, pointer.y).sendToClients();
     });
 }
@@ -136,8 +139,6 @@ function syncPlayerStateWithPlayerSprite(playerState, player) {
 
 function playerStateOutdated(scene) {
     if (scene.oldPlayerState && scene.playerState) {
-        // console.log(scene.oldPlayerState);
-        // console.log(scene.playerState);
         for (var property in scene.oldPlayerState) {
             if (scene.oldPlayerState[property] != scene.playerState[property]) {
                 Object.assign(scene.oldPlayerState, scene.playerState);
@@ -153,4 +154,10 @@ function syncPlayerWithServer(scene) {
         // update state with server
         scene.socket.emit("playerStateChanged", scene.playerState);
     }
+}
+
+function interpolateOtherPlayerPositions(scene) {
+    scene.otherPlayers.getChildren().forEach((player) => {
+        player.setPosition(lerpFloat(player.x, player.nextX, 0.2), lerpFloat(player.y, player.nextY, 0.2));
+    });
 }
