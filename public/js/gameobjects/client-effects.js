@@ -5,9 +5,10 @@ class Marker extends Phaser.Physics.Arcade.Sprite {
     }
     static types = {
         1: {
+            radius: 0.5,
             baseSprite: "interaction",
             eventSprite: "anim_axeswing",
-            eventDelay: 1000,
+            eventDelay: 50,
             hitEvent: (self, other) => {
                 if (!self.hitLog.has(other.id)) {
                     // only the owner of the marker should execute this part of the code, on hit events sent to the server
@@ -41,6 +42,7 @@ class Marker extends Phaser.Physics.Arcade.Sprite {
             var config = Marker.types[type];
             this.setTexture(config.baseSprite);
             this.setPosition(x, y);
+            this.setScale(config.radius, config.radius);
 
             scene.physics.add.existing(this);
             scene.add.existing(this);
