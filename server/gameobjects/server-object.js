@@ -5,7 +5,6 @@ exports.ServerObject = class ServerObject {
         this.x = 0;
         this.y = 0;
         this.objectName = "ServerObject";
-        this.data = null;
     }
 
     sendToClient(socket) {
@@ -13,8 +12,7 @@ exports.ServerObject = class ServerObject {
             id: this.id,
             x: this.x,
             y: this.y,
-            objectName: this.objectName,
-            data: this.data
+            objectName: this.objectName
         });
     }
 
@@ -23,8 +21,7 @@ exports.ServerObject = class ServerObject {
             id: this.id,
             x: this.x,
             y: this.y,
-            objectName: this.objectName,
-            data: this.data
+            objectName: this.objectName
         });
     }
 

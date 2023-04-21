@@ -2,6 +2,7 @@ class ClientPlayers {
     constructor(scene) {
         this.scene = scene;
         this.socket = scene.socket;
+        this.player = null;
         this.otherPlayers = scene.add.group();
 
         this.inputKeys = {
@@ -105,7 +106,6 @@ class ClientPlayers {
     }
 
     playerInputUpdate() {
-        var scene = this.scene;
         if (this.player) {
             // PLAYER MOVEMENT ====================================================================
             if (this.inputKeys.down.isDown) {
